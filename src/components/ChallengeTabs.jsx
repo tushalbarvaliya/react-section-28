@@ -1,4 +1,5 @@
 import Badge from './Badge.jsx';
+import React from 'react';
 
 function Tab({ isSelected, onSelect, badgeCaption, children }) {
   return (

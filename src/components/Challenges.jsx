@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import React from 'react';
 
 import { ChallengesContext } from '../store/challenges-context.jsx';
 import ChallengeItem from './ChallengeItem.jsx';

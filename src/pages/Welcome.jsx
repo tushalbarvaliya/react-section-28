@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import React from 'react';
 
 import cityImg from '../assets/city.jpg';
 import heroImg from '../assets/hero.png';

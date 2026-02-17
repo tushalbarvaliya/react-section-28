@@ -1,4 +1,5 @@
 import { useContext, useRef, useState } from 'react';
+import React from 'react';
 
 import { ChallengesContext } from '../store/challenges-context.jsx';
 import Modal from './Modal.jsx';

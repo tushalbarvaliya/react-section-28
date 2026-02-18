@@ -4,12 +4,14 @@ import React from "react";
 import { ChallengesContext } from "../store/challenges-context.jsx";
 import Modal from "./Modal.jsx";
 import images from "../assets/images.js";
-import { motion, scale, stagger, transform } from "framer-motion";
+import { motion, scale, stagger, transform, useAnimate } from "framer-motion";
 
 export default function NewChallenge({ onDone }) {
   const title = useRef();
   const description = useRef();
   const deadline = useRef();
+
+  const [scope, animate] = useAnimate();
 
   const [selectedImage, setSelectedImage] = useState(null);
   const { addChallenge } = useContext(ChallengesContext);
@@ -33,6 +35,22 @@ export default function NewChallenge({ onDone }) {
       !challenge.deadline.trim() ||
       !challenge.image
     ) {
+      // animate(
+      //   "input,textarea",
+      //   { x: [0,-50, 0, 50,0] },
+      //   { type: "spring",  delay:stagger(5)},
+      // );
+
+      animate(
+        "input, textarea",
+        { x: [0, -20, 0, 20, 0], transition: { duration: 5 } },
+        {
+          type: "keyframes",
+          stiffness: 400,
+          damping: 20,
+          delay: stagger(0.5),
+        },
+      );
       return;
     }
 
@@ -42,7 +60,7 @@ export default function NewChallenge({ onDone }) {
 
   return (
     <Modal title="New Challenge" onClose={onDone}>
-      <form id="new-challenge" onSubmit={handleSubmit}>
+      <form id="new-challenge" onSubmit={handleSubmit} ref={scope}>
         <p>
           <label htmlFor="title">Title</label>
           <input ref={title} type="text" name="title" id="title" />
@@ -58,10 +76,11 @@ export default function NewChallenge({ onDone }) {
           <input ref={deadline} type="date" name="deadline" id="deadline" />
         </p>
 
-        <motion.ul id="new-challenge-images"
-        variants={{
-          visible:{transition:{delayChildren:stagger(0.05)}}
-        }}
+        <motion.ul
+          id="new-challenge-images"
+          variants={{
+            visible: { transition: { delayChildren: stagger(0.05) } },
+          }}
         >
           {images.map((image) => (
             <motion.li
